@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#
+# Summary: Set or show the global PHP version
+#
+# Usage: phpenv global <version>
+#
+# Sets the global PHP version. You can override the global version at
+# any time by setting a directory-specific version with `phpenv local'
+# or by setting the `PHPENV_VERSION' environment variable.
+#
+# <version> should be a string matching a PHP version known to phpenv.
+# The special version string `system' will use your default system PHP.
+# Run `phpenv versions' for a list of available PHP versions.
+
+set -e
+[ -n "$PHPENV_DEBUG" ] && set -x
+
+# Provide phpenv completions
+if [ "$1" = "--complete" ]; then
+  echo system
+  exec phpenv-versions --bare
+fi
+
+PHPENV_VERSION="$1"
+PHPENV_VERSION_FILE="${PHPENV_ROOT}/version"
+
+if [ -n "$PHPENV_VERSION" ]; then
+  phpenv-version-file-write "$PHPENV_VERSION_FILE" "$PHPENV_VERSION"
+else
+  phpenv-version-file-read "$PHPENV_VERSION_FILE" ||
+  phpenv-version-file-read "${PHPENV_ROOT}/global" ||
+  phpenv-version-file-read "${PHPENV_ROOT}/default" ||
+  echo system
+fi
