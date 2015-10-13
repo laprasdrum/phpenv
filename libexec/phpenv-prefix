@@ -22,9 +22,9 @@ elif [ -z "$PHPENV_VERSION" ]; then
 fi
 
 if [ "$PHPENV_VERSION" = "system" ]; then
-  if RUBY_PATH="$(phpenv-which ruby 2>/dev/null)"; then
-    RUBY_PATH="${RUBY_PATH%/*}"
-    echo "${RUBY_PATH%/bin}"
+  if PHP_PATH="$(phpenv-which php 2>/dev/null)"; then
+    PHP_PATH="${PHP_PATH%/*}"
+    echo "${PHP_PATH%/bin}"
     exit
   else
     echo "phpenv: system version not found in PATH" >&2
