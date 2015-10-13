@@ -8,7 +8,7 @@ set -e
 # Provide phpenv completions
 if [ "$1" = "--complete" ]; then
   echo --path
-  exec phpenv shims --short
+  exec phpenv-shims --short
 fi
 
 if [ "$1" = "--path" ]; then

@@ -5,14 +5,16 @@ set -e
 
 find_local_version_file() {
   local root="$1"
-  while [ -n "$root" ]; do
-    if [ -e "${root}/.ruby-version" ]; then
-      echo "${root}/.ruby-version"
+  while true; do
+    [[ "$root" =~ ^//[^/]*$ ]] && break
+    if [ -e "${root}/.php-version" ]; then
+      echo "${root}/.php-version"
       exit
     elif [ -e "${root}/.phpenv-version" ]; then
       echo "${root}/.phpenv-version"
       exit
     fi
+    [ -n "$root" ] || break
     root="${root%/*}"
   done
 }

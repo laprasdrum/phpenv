@@ -13,34 +13,34 @@ git_commit() {
 }
 
 @test "default version" {
-  assert [ ! -e "$RBENV_ROOT" ]
-  run rbenv---version
+  assert [ ! -e "$PHPENV_ROOT" ]
+  run phpenv---version
   assert_success
-  [[ $output == "rbenv 0."* ]]
+  [[ $output == "phpenv 0."* ]]
 }
 
 @test "reads version from git repo" {
-  mkdir -p "$RBENV_ROOT"
-  cd "$RBENV_ROOT"
+  mkdir -p "$PHPENV_ROOT"
+  cd "$PHPENV_ROOT"
   git init
   git_commit
   git tag v0.4.1
   git_commit
   git_commit
 
-  cd "$RBENV_TEST_DIR"
-  run rbenv---version
+  cd "$PHPENV_TEST_DIR"
+  run phpenv---version
   assert_success
-  [[ $output == "rbenv 0.4.1-2-g"* ]]
+  [[ $output == "phpenv 0.4.1-2-g"* ]]
 }
 
 @test "prints default version if no tags in git repo" {
-  mkdir -p "$RBENV_ROOT"
-  cd "$RBENV_ROOT"
+  mkdir -p "$PHPENV_ROOT"
+  cd "$PHPENV_ROOT"
   git init
   git_commit
 
-  cd "$RBENV_TEST_DIR"
-  run rbenv---version
-  [[ $output == "rbenv 0."* ]]
+  cd "$PHPENV_TEST_DIR"
+  run phpenv---version
+  [[ $output == "phpenv 0."* ]]
 }

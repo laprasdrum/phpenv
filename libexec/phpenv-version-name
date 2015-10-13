@@ -20,12 +20,9 @@ version_exists() {
 
 if version_exists "$PHPENV_VERSION"; then
   echo "$PHPENV_VERSION"
-elif version_exists "${PHPENV_VERSION#ruby-}"; then
-  { echo "warning: ignoring extraneous \`ruby-' prefix in version \`${PHPENV_VERSION}'"
-    echo "         (set by $(phpenv-version-origin))"
-  } >&2
-  echo "${PHPENV_VERSION#ruby-}"
+elif version_exists "${PHPENV_VERSION#php-}"; then
+  echo "${PHPENV_VERSION#php-}"
 else
-  echo "phpenv: version \`$PHPENV_VERSION' is not installed" >&2
+  echo "phpenv: version \`$PHPENV_VERSION' is not installed (set by $(phpenv-version-origin))" >&2
   exit 1
 fi

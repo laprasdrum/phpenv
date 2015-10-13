@@ -6,9 +6,9 @@
 #        phpenv local --unset
 #
 # Sets the local application-specific PHP version by writing the
-# version name to a file named `.ruby-version'.
+# version name to a file named `.php-version'.
 #
-# When you run a PHP command, phpenv will look for a `.ruby-version'
+# When you run a PHP command, phpenv will look for a `.php-version'
 # file in the current directory and each parent directory. If no such
 # file is found in the tree, phpenv will use the global PHP version
 # specified with `phpenv global'. A version specified with the
@@ -16,7 +16,7 @@
 # and global versions.
 #
 # For backwards compatibility, phpenv will also read version
-# specifications from `.phpenv-version' files, but a `.ruby-version'
+# specifications from `.phpenv-version' files, but a `.php-version'
 # file in the same directory takes precedence.
 #
 # <version> should be a string matching a PHP version known to phpenv.
@@ -36,18 +36,18 @@ fi
 PHPENV_VERSION="$1"
 
 if [ "$PHPENV_VERSION" = "--unset" ]; then
-  rm -f .ruby-version .phpenv-version
+  rm -f .php-version .phpenv-version
 elif [ -n "$PHPENV_VERSION" ]; then
   previous_file="$(PHPENV_VERSION= phpenv-version-origin || true)"
-  phpenv-version-file-write .ruby-version "$PHPENV_VERSION"
+  phpenv-version-file-write .php-version "$PHPENV_VERSION"
   if [ "$previous_file" -ef .phpenv-version ]; then
     rm -f .phpenv-version
     { echo "phpenv: removed existing \`.phpenv-version' file and migrated"
-      echo "       local version specification to \`.ruby-version' file"
+      echo "       local version specification to \`.php-version' file"
     } >&2
   fi
 else
-  phpenv-version-file-read .ruby-version ||
+  phpenv-version-file-read .php-version ||
   phpenv-version-file-read .phpenv-version ||
   { echo "phpenv: no local version configured for this directory"
     exit 1
